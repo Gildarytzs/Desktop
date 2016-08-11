@@ -1,1 +1,9 @@
-# Desktop 
+-js des timers 
+-messagerie interne et externe jusquaux boites mails
+-pages pour chaque enchere 
+-miser 
+-porte feuille ? avec condition de mise si argent ?
+-ou mettre des mises comme on veux meme si on a pas la thune
+-barres de recherche avec resultat de la recherche 
+-plus de categoris acceuil avec 4 prochain timers fini pour chaque grosse categorie
+-nouveau nom au site
