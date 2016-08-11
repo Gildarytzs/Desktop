@@ -1,4 +1,4 @@
--js des timers 
+-js des timers \n
 -messagerie interne et externe jusquaux boites mails
 -pages pour chaque enchere 
 -miser 
