@@ -18,8 +18,9 @@
                 
                 <ul class="nav navbar-nav">
                     <?php
-                    $dddd=dataSelect("id","users","id",$_SESSION['id'],0);
+                    
                     if (isConnected()) {
+                        $dddd=dataSelect("id","users","id",$_SESSION['id'],0);
                         echo '<li><a href="index.php">Accueil</a></li>';
                         echo '<li><a href="bids.php">Enchères</a></li>';
                         echo '<li><a data-toggle="modal" data-target="#new-bid">Déposer une enchère</a></li>';

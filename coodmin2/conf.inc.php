@@ -1,6 +1,6 @@
 <?php
 define('USERBDD', 'root');
-define('MDPBDD', '');
+define('MDPBDD', 'root');
 define('HOSTBDD', 'localhost');
 define('NAMEBDD', 'coodmin');
 

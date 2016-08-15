@@ -217,7 +217,8 @@
             $bidUser = dataSelect("*", "bid_user", "id_bid", $bid['id'], 1);
             $bidUser = array_reverse($bidUser);
             $delay = $bid['end_bid'] - time();
-            if ($delay > 0) {
+            $verified = $bid['verified'];
+            if ($delay > 0 && $verified == 1) {
                 $seconds = $delay % 60;
                 $minutes = $delay / 60 % 60;
                 $hours = $delay / 3600 % 24;
