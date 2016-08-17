@@ -1,4 +1,5 @@
 -js des timers \n
+-rendre admin securise 
 -messagerie interne et externe jusquaux boites mails
 -pages pour chaque enchere 
 -ajouter formulaire image pour lenchere sinon en mettre dautre par defaut par grosse categorie
