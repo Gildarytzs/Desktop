@@ -8,7 +8,15 @@
 -ou mettre des mises comme on veux meme si on a pas la thune
 -barres de recherche avec resultat de la recherche 
 -plus de categoris acceuil avec 4 prochain timers fini pour chaque grosse categorie
--nouveau nom au site
--afficher les encherres au public ssi admin a dit oui
--ENcheres terminees qui a gagne avec combien dargent 
--arreter dafficher lenchere sur le site quand ca fait plus 1j 10j 1h etc selon le temps de vise en encheres
+-Nouveau nom au site
+-Afficher les encherres au public ssi admin a dit oui
+-Encheres terminees qui a gagne avec combien dargent 
+-Arreter dafficher lenchere sur le site quand ca fait plus 1j 10j 1h etc selon le temps de vise en encheres
+-Categorie if dans la bdd choix image ajouter dossier juste avec image 1
+-Mise check porte feuille que l'on peut remplir avec du credit a faire plus tard avec de la vraie thine mais on va rentrer le montant dans le porte feuille cible
+-Quand on mise check si resultat ini a 0 + ce quil mise ca doit etre <= au porte feuille sinon il peut pas miser alert 
+-Qfficher celui pour qui linstant va gagne lenchere
+-Si cest bien ajouter un input lors de l'upload d'image automatiquement max 3
+-bdd changer systeme image par default
+-chemin bdd avec les 3 images creer un dossier nom du dossier = id bid 
+-si l'utilisateur ne met pas dimage ce sera alors dans le dossier dit 0 on mettra les images par defaut ici
