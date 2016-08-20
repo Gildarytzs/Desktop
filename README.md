@@ -6,7 +6,7 @@
 -miser 
 -porte feuille ? avec condition de mise si argent ?
 -ou mettre des mises comme on veux meme si on a pas la thune
--barres de recherche avec resultat de la recherche 
+-barres de recherche avec resultat de la recherche juste sur la page encheres
 -plus de categoris acceuil avec 4 prochain timers fini pour chaque grosse categorie
 -Nouveau nom au site
 -Afficher les encherres au public ssi admin a dit oui
