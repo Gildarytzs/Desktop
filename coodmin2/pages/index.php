@@ -172,20 +172,21 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header text-center background-purple white-color">
-                <h4 class="modal-title white-color"><span class="glyphicon glyphicon-off orange-color"></span> Connexion</h4>
+                <h4  class="modal-title white-color"><span  class="glyphicon glyphicon-off orange-color"></span> Connexion</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form role="form" class="form-horizontal" method="post" action="login.php">
+                            <form role="form" class="form-horizontal" method="post" action="login.php" id="formulaire_login">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" name="email" value="<?php echo (isset($_POST['email'])?$_POST['email']:"") ?>" placeholder="Email :">
+                                        <input type="email" class="form-control" name="email" value="<?php echo (isset($_POST['email'])?$_POST['email']:"") ?>" placeholder="Email :" id="email">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" name="password" placeholder="Mot de passe :">
+                                        <input type="password" class="form-control" name="password" placeholder="Mot de passe :" id="password">
                                     </div>
+                                    <div id="error_login" class="has-error" style="display: none;"></div><!-- a refaire -->
                                     <div class="text-center padding">
                                         <p>Pas encore inscrit ? <a class="page-scroll" href="#inscription" data-dismiss="modal">Cliquez ici</a></p>
                                     </div>
@@ -210,6 +211,7 @@
 <div id="bids" class="container-fluid">
     <div class="row">
         <h2 class="mb text-center">Enchères en cours</h2>
+        <div class="col-md-2"></div>
         <?php
         $bids = dataSelectAll("*", "bids");
         foreach ($bids as $b) {
@@ -249,6 +251,7 @@
             }
         }
         ?>
+        <div class="col-md-2"></div>
     </div>
 </div>
 

@@ -312,3 +312,27 @@ function count() {
     var counter = document.getElementById("counter");
     console.log(counter);
 }
+
+jQuery(function($) {
+
+	$("#formulaire_login").submit(function(e) {
+		e.preventDefault();
+
+		$.ajax({
+			method: 'POST',
+			url: '../pages/login.php',
+			data: {
+				'email': $('#email').val(),
+				'password': $('#password').val()
+			},
+			success: function(data) {
+				if(data == 1) {
+					location.reload();
+				} else {
+					$("#error_login").append(data).show();
+				}
+			}
+		});
+	});
+
+});

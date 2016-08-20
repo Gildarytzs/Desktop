@@ -59,7 +59,7 @@
             $bid = dataSelect("*", "bids", "id", $b['id'], 0);
             $user = dataSelect("*", "users", "id", $bid['seller'], 0);
             $delay = $bid['end_bid'] - time();
-            if ($delay < 0 && $bid['seller'] == $_SESSION['id']) {
+            if ($delay < 0 &&  $bid['seller'] == $_SESSION['id']) {
                 $seconds = abs($delay % 60);
                 $minutes = abs($delay / 60 % 60);
                 $hours = abs($delay / 3600 % 24);

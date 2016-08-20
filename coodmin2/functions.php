@@ -82,13 +82,13 @@ function login($email, $password) {
 			$_SESSION['access_token'] = generateAccessToken($email);
 			$_SESSION['email'] = $email;
 			$_SESSION['id'] = $resultat['id'];
-			return FALSE;
+			return TRUE;
 		} else {
 			$_SESSION['errors'][] = 8; 
 			$log = fopen("log.txt", "a+");
 			fputs($log, "Email : ". $email ." \ Mot de passe : ". $password ."\r\n");
 			fclose($log);
-			return TRUE;
+			return FALSE;
 		}
     }
 }
