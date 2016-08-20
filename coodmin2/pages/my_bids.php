@@ -1,4 +1,6 @@
-<?php include "header.php"; ?>
+<?php require "header.php"; ?>
+
+
 
 <div id="bids" class="container-fluid">
     <div class="row">
@@ -13,7 +15,7 @@
             $bidUser = array_reverse($bidUser);
             $delay = $bid['end_bid'] - time();
             $verified = $bid['verified'];
-            if ($delay > 0 && $verified == 1 && $user == $bid['seller']) {
+            if ($delay > 0 && $verified == 1 && $bid['seller'] == $_SESSION['id']) {
                 $seconds = $delay % 60;
                 $minutes = $delay / 60 % 60;
                 $hours = $delay / 3600 % 24;
@@ -57,7 +59,7 @@
             $bid = dataSelect("*", "bids", "id", $b['id'], 0);
             $user = dataSelect("*", "users", "id", $bid['seller'], 0);
             $delay = $bid['end_bid'] - time();
-            if ($delay < 0 && time() < $bid['end_bid'] + 10800 && $user == $_SESSION['id']) {
+            if ($delay < 0 && time() < $bid['end_bid'] + 10800 && $bid['seller'] == $_SESSION['id']) {
                 $seconds = abs($delay % 60);
                 $minutes = abs($delay / 60 % 60);
                 $hours = abs($delay / 3600 % 24);
