@@ -51,7 +51,7 @@
 
 <div id="bids" class="container-fluid text-center">
     <div class="row">
-        <h2 class="mb text-center">Mes enchères terminées</h2>
+        <h2 class="mb text-center">Toutes mes enchères terminées</h2>
         <div class="col-md-2"></div>
         <?php
         $bids = dataSelectAll("*", "bids");
@@ -59,7 +59,7 @@
             $bid = dataSelect("*", "bids", "id", $b['id'], 0);
             $user = dataSelect("*", "users", "id", $bid['seller'], 0);
             $delay = $bid['end_bid'] - time();
-            if ($delay < 0 && time() < $bid['end_bid'] + 10800 && $bid['seller'] == $_SESSION['id']) {
+            if ($delay < 0 && $bid['seller'] == $_SESSION['id']) {
                 $seconds = abs($delay % 60);
                 $minutes = abs($delay / 60 % 60);
                 $hours = abs($delay / 3600 % 24);
