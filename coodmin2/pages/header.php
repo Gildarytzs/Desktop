@@ -1,5 +1,5 @@
 <?php require "../init.php"; ?>
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -24,7 +24,7 @@
                         echo '<li><a href="index.php">Accueil</a></li>';
                         echo '<li><a href="bids.php">Enchères</a></li>';
                         echo '<li><a data-toggle="modal" data-target="#new-bid">Déposer une enchère</a></li>';
-                        if ( $dddd['id'] == 10) {
+                        if ( $dddd['id'] == 0) {
                         echo '<li><a href="admin.php">Admin</a></li>';
                     }
                         

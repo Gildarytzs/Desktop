@@ -10,7 +10,7 @@ function validateInput(id, num) {
 	if(id == "type") {
 		if (input != "...") {
 			if (div.className == "form-group" || div.className == "form-group danger") {
-				div.className = "form-group success";
+				div.className = "form-group success";  // seul qui marche 
 				count += 12;
 				progress.style.width = count + "%";
 				progress.setAttribute("aria-valuenow", count);

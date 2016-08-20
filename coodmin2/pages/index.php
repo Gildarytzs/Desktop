@@ -148,6 +148,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                Inserer image(s)
                                             </div>
                                             <div class="mt text-center">
                                                 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-open orange-color"></span> Déposer</button>
@@ -345,13 +346,13 @@
                                     <option>Mlle.</option>
                                 </select>
                             </div>
-                            <div class="form-group" id="alert1" data-toggle="tooltip" data-placement="bottom" title="Le prénom doit faire au moins 2 caractères.">
+                            <div class="form-group" id="alert1" data-toggle="tooltip" data-placement="bottom" title="Le prénom doit faire plus de  2 caractères.">
                                 <input type="text" class="form-control wow fadeInUp" data-wow-duration="1s" data-wow-delay=".8s" onblur="validateInput('surname', 1)" id="surname" name="surname" value="<?php echo (isset($_POST['surname'])?$_POST['surname']:"") ?>" placeholder="Prénom :">
                             </div>
-                            <div class="form-group" id="alert2" data-toggle="tooltip" data-placement="bottom" title="Le nom doit faire au moins 2 caractères.">
+                            <div class="form-group" id="alert2" data-toggle="tooltip" data-placement="bottom" title="Le nom doit faire plus de  2 caractères.">
                                 <input type="text" class="form-control wow fadeInUp" data-wow-duration="1s" data-wow-delay="1s" onblur="validateInput('name', 2)" id="name" name="name" value="<?php echo (isset($_POST['name'])?$_POST['name']:"") ?>" placeholder="Nom :">
                             </div>
-                            <div class="form-group" id="alert8" data-toggle="tooltip" data-placement="bottom" title="Le pseudo doit faire au moins 2 caractères.">
+                            <div class="form-group" id="alert8" data-toggle="tooltip" data-placement="bottom" title="Le pseudo doit faire plus de  2 caractères.">
                                 <input type="text" class="form-control wow fadeInUp" data-wow-duration="1s" data-wow-delay="1.2s" onblur="validateInput('pseudo', 8)" id="pseudo" name="pseudo" value="<?php echo (isset($_POST['pseudo'])?$_POST['pseudo']:"") ?>" placeholder="Pseudo :">
                             </div>
                             <div class="form-group" id="alert3" data-toggle="tooltip" data-placement="bottom" title="L'email doit être valide.">
