@@ -20,3 +20,4 @@
 -bdd changer systeme image par default
 -chemin bdd avec les 3 images creer un dossier nom du dossier = id bid 
 -si l'utilisateur ne met pas dimage ce sera alors dans le dossier dit 0 on mettra les images par defaut ici
+-ajaxx deposer annonce erreur
