@@ -26,6 +26,8 @@
                                 validatorMiniPrice($_POST['miniPrice']);
                                 validatorDate($_POST['dateD'], $_POST['dateM'], $_POST['dateH']);
 
+                                $image = $_FILES['image'];
+
                                 if (isset($_SESSION['errorBid'])) {
                                     foreach($_SESSION['errorBid'] as $error) {
                                         echo '<p><span class="glyphicon glyphicon-exclamation-sign"></span> ';
@@ -37,7 +39,7 @@
                                     $date = (intval($_POST['dateD']) * 24 * 3600) + (intval($_POST['dateH']) * 3600) + (intval($_POST['dateM']) * 60);
                                     $dateEnd = $date + time();
                                     $bdd = connectBdd();
-                                    $query = $bdd->prepare('INSERT INTO bids (title, descriptive, category, estimated_price, mini_price, duration_bid, end_bid, seller) VALUES (:title, :descriptive, :category, :estimated_price, :mini_price, :duration_bid, :end_bid, :seller)');
+                                    $query = $bdd->prepare('INSERT INTO bids (title, descriptive, category, estimated_price, mini_price, duration_bid, end_bid, seller, image) VALUES (:title, :descriptive, :category, :estimated_price, :mini_price, :duration_bid, :end_bid, :seller)');
                                     $query->execute(["title" => $_POST['title'],
                                                      "descriptive" => $_POST['descriptive'], 
                                                      "category" => $_POST['category'],
@@ -45,7 +47,13 @@
                                                      "mini_price" => $_POST['miniPrice'], 
                                                      "duration_bid" => $date,
                                                      "end_bid" => $dateEnd,
-                                                     "seller" => $_SESSION['id']]);
+                                                     "seller" => $_SESSION['id']/*,
+                                                     "image" => */]);
+
+                                    $insertedId = $bdd->lastInsertId();
+                                    mkdir('../img/'.$insertedId);
+                                    move_uploaded_file($image['tmp_name'], '../img/'.$insertedId.'/'.$image['name']);
+
                                     echo '<script>alert("Votre enchère a bien été pris en compte. Elle sera disponible une fois etudiée/validée.")</script>';
                                 }
                             }
@@ -54,7 +62,7 @@
                                 <div id="progress" class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
                                 </div>
                             </div>
-                            <form role="form" class="form-horizontal" method="post">
+                            <form role="form" class="form-horizontal" method="post" enctype="multipart/form-data">
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -148,7 +156,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                Inserer image(s)
+                                                <input type="file" name="image">
                                             </div>
                                             <div class="mt text-center">
                                                 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-open orange-color"></span> Déposer</button>
@@ -186,10 +194,11 @@
                                     <div class="form-group">
                                         <input type="password" class="form-control" name="password" placeholder="Mot de passe :" id="password">
                                     </div>
-                                    <div id="error_login" class="has-error" style="display: none;"></div><!-- a refaire -->
+                                    
                                     <div class="text-center padding">
                                         <p>Pas encore inscrit ? <a class="page-scroll" href="#inscription" data-dismiss="modal">Cliquez ici</a></p>
                                     </div>
+                                    <div id="error_login" class="has-error" style="display: none;"></div><!-- a refaire -->
                                     <div class="text-center">
                                         <div class="form-group">
                                             <button id="button" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-off orange-color"></span> Connexion</button>
@@ -224,31 +233,33 @@
             if ($delay > 0 && $verified == 1) {
                 $seconds = $delay % 60;
                 $minutes = $delay / 60 % 60;
-                $hours = $delay / 3600 % 24;
-                echo '<div class="col-md-3">';
-                echo '<div class="panel panel-default">';
-                echo '<div class="panel-heading background-orange">';
-                echo $bid['title'];
-                echo '</div>';
-                echo '<div class="panel-body">';
-                echo '<div class="container-fluid">';
-                echo '<div class="row">';
-                echo '<div class="col-md-6">';
-                echo '<p><img class="img-responsive" onload="count()" src="'. $bid['image'] .'" alt="'. $bid['title'] .'"></p>';
-                echo '</div>';
-                echo '<div class="col-md-6">';
-                if (empty($bidUser)) echo '<p>0€</p>';
-                else echo '<p>'. $bidUser[0]['bet_money'] .'€</p>';
-                echo '<button type="button" class="btn btn-default">Miser</button>';
-                echo '<p>'. html_entity_decode($bid['descriptive']) .'</p>';
-                echo '</div>';
-                echo '</div>';
-                echo '</div>';
-                echo '</div>';
-                echo '<div class="panel-footer text-center background-orange">';
-                echo '<p id="counter"><span class="glyphicon glyphicon-time"></span> '. ($hours < 10 ? '0'. $hours : $hours) .' : '. ($minutes < 10 ? '0'. $minutes : $minutes) .' : '. ($seconds < 10 ? '0'. $seconds : $seconds) .'</p>';
-                echo '</div></div></div>';
-            }
+                $hours = $delay / 3600 % 24; ?>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading background-orange">
+                            <a href="bid.php?id=<?= $bid['id'] ?>"><?php echo $bid['title']; ?></a>
+                        </div>
+                        <div class="panel-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><img class="img-responsive" onload="count()" src="<?= $bid['image'] ?>" alt="<?= $bid['title'] ?>"></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <?php if (empty($bidUser)) echo '<p>0€</p>';
+                                            else echo '<p>'. $bidUser[0]['bet_money'] .'€</p>';?>
+                                        <button type="button" class="btn btn-default">Miser</button>
+                                        <p><?= html_entity_decode($bid['descriptive']) ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer text-center background-orange">
+                            <p id="counter"><span class="glyphicon glyphicon-time"></span><?= ($hours < 10 ? '0'. $hours : $hours) .' : '. ($minutes < 10 ? '0'. $minutes : $minutes) .' : '. ($seconds < 10 ? '0'. $seconds : $seconds)?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php }
         }
         ?>
         <div class="col-md-2"></div>

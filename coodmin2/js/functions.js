@@ -336,3 +336,20 @@ jQuery(function($) {
 	});
 
 });
+
+/*Vue.http.options.root = '/coodmin2';
+Vue.http.headers.common['Authorization'] = 'Basic YXBpOnBhc3N3b3Jk';
+
+new Vue({
+  	el: '#app',
+  	data: {
+    	message: 'Hello Vue.js!'
+  	},
+	ready() {
+	  	this.$http.get('pages/timer.php').then((response) => {
+	      	console.log(response.data);
+	  	}, (response) => {
+	      	console.log(response);
+	  	});
+	}
+});*/

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 20 Août 2016 à 19:11
+-- Généré le :  Mer 24 Août 2016 à 23:49
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -122,8 +122,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `type`, `surname`, `name`, `pseudo`, `email`, `tel`, `password`, `access_token`, `admin`) VALUES
-(0, 'Mr.', 'Swann', 'Kaulanjan', 'Gildarytzs', 'swann.kaulanjan@laposte.net', '0695688618', '$2y$10$mQRJEeqnGfTimoTPzg57Xe/zl8UXAS.9UwoTncHVuULLwY0J5HwPK', '1ad802f0cd71fa9f6b7ea283b1bf2e3f', 1),
-(11, 'Mr.', 'Jean', 'Piere', 'Piere', 'pierre@hot.com', '0149501850', '$2y$10$hUjhmEvrKlqnDM1HXT/Ob.8oge5mZkrfV668tvpEsxyOIKABfhWf2', '68e6a4e8f7a76ec4d41fbb8f4b1f6e6e', 0);
+(0, 'Mr.', 'Swann', 'Kaulanjan', 'Gildarytzs', 'swann.kaulanjan@laposte.net', '0695688618', '$2y$10$mQRJEeqnGfTimoTPzg57Xe/zl8UXAS.9UwoTncHVuULLwY0J5HwPK', 'f7bfbc2dde989e6f9cd4fa8e8a85405d', 1),
+(11, 'Mr.', 'Jean', 'Piere', 'Piere', 'pierre@hot.com', '0149501850', '$2y$10$hUjhmEvrKlqnDM1HXT/Ob.8oge5mZkrfV668tvpEsxyOIKABfhWf2', '6150b8b0b789610d5282c80dbc10d939', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
