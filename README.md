@@ -1,10 +1,9 @@
 - Js des timers
-- Pages pour chaque enchere Amenager la page comme il se doit avec infos de la bdd 
+- Pages pour chaque enchere Amenager la page comme il se doit avec infos de la bdd + chat instantane ouvert que pendant lechere pour des infos pour meme commenter 
 - Faire envoie message a droite contact avec adresse mail numero de telephone ( si ya pas ajouter dans insciption mais je crois que ya)
 - Pas rafraischissement ecrire le message direct a cote uen fois envoye rafraichir et ecrire message envoye a la place de la ou tu ecrivais input textarea
 - Rendre admin securise 
 - Messagerie interne et externe jusquaux boites mails
-- 
 Image
 - Creer dossier pour chaque annonce (images) fait il reste plus que a faire la condition pour les images par defauts ainsi que inserer dans la bdd
 - Condition format image
@@ -17,7 +16,7 @@ Enchere
 - Mettre en ajax aussi pour le formulaire de deposer une annonce pour les erreurs
 - Ajouter les jours dans formulaire html js delay 
 - Ajaxx deposer annonce erreur
-- 
+
 
 
 Miser
