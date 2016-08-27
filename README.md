@@ -1,14 +1,11 @@
-- Js des timers
-- Pages pour chaque enchere Amenager la page comme il se doit avec infos de la bdd + chat instantane ouvert que pendant lechere pour des infos pour meme commenter 
+- Js des timers fait 
+- chat instantane ouvert que pendant lechere pour des infos pour meme commenter 
 - Faire envoie message a droite contact avec adresse mail numero de telephone ( si ya pas ajouter dans insciption mais je crois que ya)
 - Pas rafraischissement ecrire le message direct a cote uen fois envoye rafraichir et ecrire message envoye a la place de la ou tu ecrivais input textarea
-- Rendre admin securise 
 - Messagerie interne et externe jusquaux boites mails
 Image
-- Creer dossier pour chaque annonce (images) fait il reste plus que a faire la condition pour les images par defauts ainsi que inserer dans la bdd
-- Condition format image
-- Pouvoir mettre maximum 3 images si on en mets une un autre input identique apparait juqua 3
-
+- css page 0 idee pour inventif
+- image pour admin null bugg voir commentaire 
 Enchere
 - Page avec barres de recherche affichage de toutes les encheres en cours rechere par mot cle ainsi que par categorie
 - Peut etre trouver dautres categories ou bien regrouper qq categories dans des grosses categories ajouter les grosses au defilement dans le truc de recherche
