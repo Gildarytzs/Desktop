@@ -1,5 +1,15 @@
 - Js des timers fait 
-- chat instantane ouvert que pendant lechere pour des infos pour meme commenter 
+- presentation dans index de lannonce 
+- et aussi par bid css presentation prix estimer : ou mise gagnante
+- mes encheres a faire a afficher 
+- table commentaire 
+- input message commentaire
+- id session submit comnetaire 
+- foreach commentaire v for vuejs
+- mettre desz infos contact
+- envoie session envoie
+- recois id user qui a poster
+- page message voir les message envoye
 - Faire envoie message a droite contact avec adresse mail numero de telephone ( si ya pas ajouter dans insciption mais je crois que ya)
 - Pas rafraischissement ecrire le message direct a cote uen fois envoye rafraichir et ecrire message envoye a la place de la ou tu ecrivais input textarea
 - Messagerie interne et externe jusquaux boites mails
@@ -10,9 +20,7 @@ Enchere
 - Page avec barres de recherche affichage de toutes les encheres en cours rechere par mot cle ainsi que par categorie
 - Peut etre trouver dautres categories ou bien regrouper qq categories dans des grosses categories ajouter les grosses au defilement dans le truc de recherche
 - Afficher 2-3 annonces par categorie avec la condition que ca soit les 2-3 qui vont etre les prochain finish
-- Mettre en ajax aussi pour le formulaire de deposer une annonce pour les erreurs
-- Ajouter les jours dans formulaire html js delay 
-- Ajaxx deposer annonce erreur
+- Ajax prendre idee sur ajax login URGENT
 
 
 
