@@ -16,30 +16,44 @@
                         <div class="col-md-10">
                             <?php
                             if (isset($_POST['title']) && isset($_POST['descriptive']) && isset($_POST['estimatedPrice']) && isset($_POST['miniPrice']) && (isset($_POST['dateD']) || isset($_POST['dateH']) || isset($_POST['dateM']))) {
-                                $_POST['title'] = ucfirst(strtolower(trim($_POST['title'])));
-                                $_POST['descriptive'] = ucfirst(strtolower(trim(htmlentities($_POST['descriptive']))));
 
-                                validatorTitle($_POST['title']);
-                                validatorDescriptive($_POST['descriptive']);
-                                validatorCategory($_POST['category']);
-                                validatorEstimatedPrice($_POST['estimatedPrice']);
-                                validatorMiniPrice($_POST['miniPrice']);
-                                validatorDate($_POST['dateD'], $_POST['dateM'], $_POST['dateH']);
+                                $image['name'] = null;
+                                if(isset($_FILES['image']['name']) && !empty($_FILES['image']['name'])) {
+                                    $image = $_FILES['image'];
+                                    $taille_maxi = 1000000;
+                                    $taille = filesize($_FILES['image']['tmp_name']);
+                                    $extensions = array('.png', '.jpg', '.jpeg');
+                                    $extension = strrchr($_FILES['image']['name'], '.'); 
+                                    //Début des vérifications de sécurité...
+                                    if(!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
+                                    {
+                                        $erreur = 'Vous devez uploader un fichier de type png, jpg ou jpeg.';
+                                    }
+                                    if($taille>$taille_maxi)
+                                    {
+                                        $erreur = 'Le fichier est trop gros...';
+                                    }
 
-                                $image = $_FILES['image'];
+                                    if($erreur){
+                                        echo $erreur;
+                                        exit;
+                                    }
+                                }
 
                                 if (isset($_SESSION['errorBid'])) {
                                     foreach($_SESSION['errorBid'] as $error) {
                                         echo '<p><span class="glyphicon glyphicon-exclamation-sign"></span> ';
-                                        echo $listOfErrorsBid[$error] .'</p>';
+                                        
                                     }
                                     unset($_SESSION['errorBid']);
-                                    echo '<script>alert("Votre enchère a rencontré des problèmes. Veuillez re-cliquer sur \"Déposer une enchère\" pour voir les problèmes et les corriger.")</script>';
+                                    echo '<script>alert("Votre enchère a rencontré des problèmes.")</script>';
                                 } else {
                                     $date = (intval($_POST['dateD']) * 24 * 3600) + (intval($_POST['dateH']) * 3600) + (intval($_POST['dateM']) * 60);
                                     $dateEnd = $date + time();
+                                    $dateEnd = date("Y-m-d H:i:s", $dateEnd);
+                                    
                                     $bdd = connectBdd();
-                                    $query = $bdd->prepare('INSERT INTO bids (title, descriptive, category, estimated_price, mini_price, duration_bid, end_bid, seller, image) VALUES (:title, :descriptive, :category, :estimated_price, :mini_price, :duration_bid, :end_bid, :seller)');
+                                    $query = $bdd->prepare('INSERT INTO bids (title, descriptive, category, estimated_price, mini_price, duration_bid, end_bid, seller, image) VALUES (:title, :descriptive, :category, :estimated_price, :mini_price, :duration_bid, :end_bid, :seller, :image)');
                                     $query->execute(["title" => $_POST['title'],
                                                      "descriptive" => $_POST['descriptive'], 
                                                      "category" => $_POST['category'],
@@ -47,13 +61,14 @@
                                                      "mini_price" => $_POST['miniPrice'], 
                                                      "duration_bid" => $date,
                                                      "end_bid" => $dateEnd,
-                                                     "seller" => $_SESSION['id']/*,
-                                                     "image" => */]);
+                                                     "seller" => $_SESSION['id'],
+                                                     "image" => $image['name']]);
 
-                                    $insertedId = $bdd->lastInsertId();
-                                    mkdir('../img/'.$insertedId);
-                                    move_uploaded_file($image['tmp_name'], '../img/'.$insertedId.'/'.$image['name']);
-
+                                    if($image['name'] != null) {
+                                        $insertedId = $bdd->lastInsertId();
+                                        mkdir('../img/'.$insertedId);
+                                        move_uploaded_file($image['tmp_name'], '../img/'.$insertedId.'/'.$image['name']);
+                                    }
                                     echo '<script>alert("Votre enchère a bien été pris en compte. Elle sera disponible une fois etudiée/validée.")</script>';
                                 }
                             }
@@ -62,18 +77,19 @@
                                 <div id="progress" class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
                                 </div>
                             </div>
-                            <form role="form" class="form-horizontal" method="post" enctype="multipart/form-data">
+                            <div id="error_sub" class="has-error" style="display: none;"></div>
+                            <form role="form" class="form-horizontal" method="post" action="sub.php" enctype="multipart/form-data">
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group" id="alert1" data-toggle="tooltip" data-placement="bottom" title="Le titre doit faire au moins 2 caractères.">
-                                                <input type="text" class="form-control" onblur="validateInput('title', 1)" id="title" name="title" value="<?php echo (isset($_POST['title'])?$_POST['title']:"") ?>" placeholder="Titre :">
+                                            <div class="form-group" id="alert9" data-toggle="tooltip" data-placement="bottom" title="Le titre doit faire au moins 2 caractères.">
+                                                <input type="text" class="form-control" onblur="validateInput('title', 9)" id="title" name="title" value="<?php echo (isset($_POST['title'])?$_POST['title']:"") ?>" placeholder="Titre :">
                                             </div>
-                                            <div class="form-group" id="alert2" data-toggle="tooltip" data-placement="bottom" title="Le descriptif doit faire au moins 20 caractères.">
-                                                <textarea class="form-control" rows="5" onblur="validateInput('descriptive', 2)" id="descriptive" name="descriptive" placeholder="Descriptif :"><?php echo (isset($_POST['descriptive'])?$_POST['descriptive']:"") ?></textarea>
+                                            <div class="form-group" id="alert10" data-toggle="tooltip" data-placement="bottom" title="Le descriptif doit faire au moins 20 caractères.">
+                                                <textarea class="form-control" rows="5" onblur="validateInput('descriptive', 10)" id="descriptive" name="descriptive" placeholder="Descriptif :"><?php echo (isset($_POST['descriptive'])?$_POST['descriptive']:"") ?></textarea>
                                             </div>
-                                            <div class="form-group" id="alert5" data-toggle="tooltip" data-placement="bottom" title="Vous devez choisir au moins une catégorie.">
-                                                <select class="form-control" onblur="validateInput('category', 5)" id="category" name="category" value="<?php echo(isset($_POST['category'])?$_POST['category']:"") ?>">
+                                            <div class="form-group" id="alert11" data-toggle="tooltip" data-placement="bottom" title="Vous devez choisir au moins une catégorie.">
+                                                <select class="form-control" onblur="validateInput('category', 11)" id="category" name="category" value="<?php echo(isset($_POST['category'])?$_POST['category']:"") ?>">
                                                     <?php
                                                     if (isset($_POST['category'])) $knowCategory = dataSelect("*", "categories", "id", $_POST['category'], 0); 
                                                        
@@ -92,8 +108,8 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-md-10">
-                                                        <div class="form-group" id="alert3" data-toggle="tooltip" data-placement="bottom" title="Le prix estimé doit etre supérieur à 0.">
-                                                            <input type="text" class="form-control" onblur="validateInput('estimated-price', 3)" id="estimated-price" name="estimatedPrice" value="<?php echo (isset($_POST['estimatedPrice'])?$_POST['estimatedPrice']:"") ?>" placeholder="Prix estimé :">
+                                                        <div class="form-group" id="alert12" data-toggle="tooltip" data-placement="bottom" title="Le prix estimé doit etre supérieur à 0.">
+                                                            <input type="text" class="form-control" onblur="validateInput('estimated-price', 12)" id="estimated-price" name="estimatedPrice" value="<?php echo (isset($_POST['estimatedPrice'])?$_POST['estimatedPrice']:"") ?>" placeholder="Prix estimé :">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2">
@@ -104,8 +120,8 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-md-10">
-                                                        <div class="form-group" id="alert4" data-toggle="tooltip" data-placement="bottom" title="Le prix minimum doit etre supérieur à 0.">
-                                                            <input type="text" class="form-control" onblur="validateInput('mini-price', 4)" id="mini-price" name="miniPrice" value="<?php echo (isset($_POST['miniPrice'])?$_POST['miniPrice']:"") ?>" placeholder="Prix minimum :">
+                                                        <div class="form-group" id="alert13" data-toggle="tooltip" data-placement="bottom" title="Le prix minimum doit etre supérieur à 0.">
+                                                            <input type="text" class="form-control" onblur="validateInput('mini-price', 13)" id="mini-price" name="miniPrice" value="<?php echo (isset($_POST['miniPrice'])?$_POST['miniPrice']:"") ?>" placeholder="Prix minimum :">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2">
@@ -121,8 +137,8 @@
                                                             <div class="row">
                                                                 <div class="col-md-1"></div>
                                                                 <div class="col-md-10">
-                                                                    <div class="form-group" id="alert6" data-toggle="tooltip" data-placement="bottom" title="La durée de l'enchère doit être supérieur à 1 minute et inférieur à 60 jours">
-                                                                        <input type="text" class="form-control" onblur="validateInput('date', 6)" id="date-d" name="dateD" value="<?php echo (isset($_POST['dateD'])?$_POST['dateD']:"") ?>" placeholder="00">
+                                                                    <div class="form-group" id="alert14" data-toggle="tooltip" data-placement="bottom" title="La durée de l'enchère doit être supérieur à 1 minute et inférieur à 60 jours">
+                                                                        <input type="text" class="form-control" onblur="validateInput('date', 14)" id="date-d" name="dateD" value="<?php echo (isset($_POST['dateD'])?$_POST['dateD']:"") ?>" placeholder="00">
                                                                     </div> Jour(s)
                                                                 </div>
                                                                 <div class="col-md-1"></div>
@@ -134,8 +150,8 @@
                                                             <div class="row">
                                                                 <div class="col-md-1"></div>
                                                                 <div class="col-md-10">
-                                                                    <div class="form-group" id="alert7" data-toggle="tooltip" data-placement="bottom" title="La durée de l'enchère doit être supérieur à 1 minute et inférieur à 60 jours.">
-                                                                        <input type="text" class="form-control" onblur="validateInput('date', 7)" id="date-h" name="dateH" value="<?php echo (isset($_POST['dateH'])?$_POST['dateH']:"") ?>" placeholder="00">
+                                                                    <div class="form-group" id="alert15" data-toggle="tooltip" data-placement="bottom" title="La durée de l'enchère doit être supérieur à 1 minute et inférieur à 60 jours.">
+                                                                        <input type="text" class="form-control" onblur="validateInput('date', 15)" id="date-h" name="dateH" value="<?php echo (isset($_POST['dateH'])?$_POST['dateH']:"") ?>" placeholder="00">
                                                                     </div> Heure(s)
                                                                 </div>
                                                                 <div class="col-md-1"></div>
@@ -147,8 +163,8 @@
                                                             <div class="row">
                                                                 <div class="col-md-1"></div>
                                                                 <div class="col-md-10">
-                                                                    <div class="form-group" id="alert8" data-toggle="tooltip" data-placement="bottom" title="La durée de l'enchère doit être supérieur à 1 minute et inférieur à 60 jours.">
-                                                                        <input type="text" class="form-control" onblur="validateInput('date', 8)" id="date-m" name="dateM" value="<?php echo (isset($_POST['dateM'])?$_POST['dateM']:"") ?>" placeholder="00">
+                                                                    <div class="form-group" id="alert16" data-toggle="tooltip" data-placement="bottom" title="La durée de l'enchère doit être supérieur à 1 minute et inférieur à 60 jours.">
+                                                                        <input type="text" class="form-control" onblur="validateInput('date', 16)" id="date-m" name="dateM" value="<?php echo (isset($_POST['dateM'])?$_POST['dateM']:"") ?>" placeholder="00">
                                                                     </div> Minute(s)
                                                                 </div>
                                                                 <div class="col-md-1"></div>
@@ -216,55 +232,7 @@
 </div>
 
 <!-- Affichage annonce -->
-
-<div id="bids" class="container-fluid">
-    <div class="row">
-        <h2 class="mb text-center">Enchères en cours</h2>
-        <div class="col-md-2"></div>
-        <?php
-        $bids = dataSelectAll("*", "bids");
-        foreach ($bids as $b) {
-            $bid = dataSelect("*", "bids", "id", $b['id'], 0);
-            $user = dataSelect("*", "users", "id", $bid['seller'], 0);
-            $bidUser = dataSelect("*", "bid_user", "id_bid", $bid['id'], 1);
-            $bidUser = array_reverse($bidUser);
-            $delay = $bid['end_bid'] - time();
-            $verified = $bid['verified'];
-            if ($delay > 0 && $verified == 1) {
-                $seconds = $delay % 60;
-                $minutes = $delay / 60 % 60;
-                $hours = $delay / 3600 % 24; ?>
-                <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading background-orange">
-                            <a href="bid.php?id=<?= $bid['id'] ?>"><?php echo $bid['title']; ?></a>
-                        </div>
-                        <div class="panel-body">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p><img class="img-responsive" onload="count()" src="<?= $bid['image'] ?>" alt="<?= $bid['title'] ?>"></p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <?php if (empty($bidUser)) echo '<p>0€</p>';
-                                            else echo '<p>'. $bidUser[0]['bet_money'] .'€</p>';?>
-                                        <button type="button" class="btn btn-default">Miser</button>
-                                        <p><?= html_entity_decode($bid['descriptive']) ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-footer text-center background-orange">
-                            <p id="counter"><span class="glyphicon glyphicon-time"></span><?= ($hours < 10 ? '0'. $hours : $hours) .' : '. ($minutes < 10 ? '0'. $minutes : $minutes) .' : '. ($seconds < 10 ? '0'. $seconds : $seconds)?></p>
-                        </div>
-                    </div>
-                </div>
-            <?php }
-        }
-        ?>
-        <div class="col-md-2"></div>
-    </div>
-</div>
+<container-bid></container-bid>
 
 <!-- Affichage annonce terminée -->
 
@@ -289,9 +257,8 @@
                 echo '<div class="panel-body">';
                 echo '<p><img class="img-responsive" src="'. $bid['image'] .'" alt="'. $bid['title'] .'"></p>';
                 echo '<p>'. html_entity_decode($bid['descriptive']) .'</p>';
-                echo '</div><div class="panel-footer background-orange">';
-                echo '<p>Terminée depuis : '. ($hours < 10 ? '0'. $hours : $hours) .' : '. ($minutes < 10 ? '0'. $minutes : $minutes) .' : '. ($seconds < 10 ? '0'. $seconds : $seconds) .'</p>';
-                echo '</div></div></div>';
+                echo '</div>';
+                echo '</div></div>';
             }
         }
         ?>
@@ -344,11 +311,8 @@
             }
             ?>
             <h2 class="text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">Inscription</h2>
-            <div class="progress wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
-                <div id="progress" class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                </div>
-            </div>
-            <form role="form" class="form-horizontal" method="post">
+            <div id="error_sub" class="has-error" style="display: none;"></div>
+            <form role="form" class="form-horizontal" method="post" id='formulaire_subscribe'>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">

@@ -27,6 +27,7 @@
                         if ( $dddd['id'] == 0) {
                         echo '<li><a href="admin.php">Admin</a></li>';
                     }
+                        echo "<li><a href='mails.php'>Messages</a></li>";
                         
                     } else {
                         echo '<li><a href="index.php">Accueil</a></li>';
@@ -38,6 +39,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <?php
                     if (isConnected()) {
+                        $dddd=dataSelect("*","users","id",$_SESSION['id'],0);
+                        echo '<li>Bonjour '. $dddd['surname'].'</li>';
                         echo '<li><a href="my_bids.php">Mes enchères</a></li>';
                         echo '<li><a href="logout.php"><span class="glyphicon glyphicon-off orange-color"></span> Déconnexion</a></li>';
                     } else {
