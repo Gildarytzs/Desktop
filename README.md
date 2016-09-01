@@ -32,3 +32,10 @@ Miser
 - L'utilisateur ecrira donc la valeur quil mise elle ne se cumule pas genre mise 10 balles 4 fois ce sera direct 40  
 - A la fin de lenchere faire dans enchere terminee avec nom du gagnant ainsi que combien 
 - Si on appuie sur miser sur la page daccueil ca nous ramene a la page enchere 
+- 
+
+https://www.devbridge.com/
+https://vuejs.org/
+http://getbootstrap.com/
+https://jquery.com/
+
